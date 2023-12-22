@@ -1,7 +1,10 @@
 ## add the following directory
-|-media
+|media
+
 |-- images
+
 |-- pdfs
+
 |-- prepro
 
 ## Example ENV
