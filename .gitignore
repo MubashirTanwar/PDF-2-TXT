@@ -1,0 +1,5 @@
+.env
+images/
+pdfs/
+prepro/
+__pycache__/

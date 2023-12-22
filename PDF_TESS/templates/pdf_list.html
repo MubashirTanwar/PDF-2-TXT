@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF List</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        body{
+            font-family: 'Montserrat', sans-serif;
+        }
+        .pdf-list {
+            display: flex;
+        }
+
+        .pdf-list-column {
+            padding: 10px;
+        }
+
+        .pdf-list-column:first-child {
+            flex: 20%;
+        }
+
+        .pdf-list-column:last-child {
+            flex: 80%;
+        }
+
+        .pdf-page {
+            font-weight: bold;
+        }
+
+        .pdf-name {
+            font-weight: bold;
+        }
+
+        .pdf-text {
+            white-space: pre-wrap;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="my-4">List of Uploaded PDFs</h1>
+        <a class="btn btn-primary my-4" href="{% url 'upload_pdf' %}">Upload another PDF</a>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group">
+                    {% for pdf in pdfs reversed %}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-6"> 
+                                <h3 class="d-block pdf-name">
+                                    <a href="{{ pdf.file.url }}" target="_blank">{{ pdf.file.name }}</a>
+                                </h3>
+                            </div>
+                            <div class="col-md-6"> </div>
+                        </div>
+                    </li>
+
+                    {% for extracted_text in pdf.extractedtext_set.all %}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-6"> 
+                                <p class="d-block pdf-page">Page: {{ extracted_text.page_number }}</p>
+                                <a href="{{ pdf.file.url }}#page={{ extracted_text.page_number }}" target="_blank">View Page</a>
+                                <!-- <embed src="{{ pdf.file.url }}#page={{ extracted_text.page_number }}" type=""
+                                width="200"
+                                height="400"> -->
+                            </div>
+                            <div class="col-md-6"> 
+                                <strong class="d-block mt-3">Extracted Text:</strong>
+                                <pre class="pdf-text">{{ extracted_text.text }}</pre>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
