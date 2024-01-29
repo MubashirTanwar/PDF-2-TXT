@@ -37,7 +37,7 @@ def upload_pdf(request):
                 cv2.imwrite(prepro_path + f'{pdf.file.name}_page_{i+1}.png', result)
 
                 # Save the image path in the database
-                text = pytesseract.image_to_string(image)
+                text = pytesseract.image_to_string(image, lang='mar')
                 extracted_text = ExtractedText(pdf=pdf, page_number=i+1, text=text, image_path=image_path)
                 extracted_text.save()
 
