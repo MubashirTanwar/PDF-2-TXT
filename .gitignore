@@ -1,5 +1,7 @@
 .env
-images/
-pdfs/
+media/pdfs/*
+!.media/pdfs/.gitkeep
+media/images/*
+!.media/images/.gitkeep
 prepro/
 __pycache__/
